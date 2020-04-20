@@ -92,34 +92,61 @@ class FuleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget _boxView = Container(
+    //不含有borderRadius
+    BoxDecoration _fuleViewBoxDecoration = BoxDecoration(
+      color: backgroundColor,
+      border: getBorder(border, borderWidth, borderColor, borderStyle),
+      boxShadow: [
+        BoxShadow(
+          color: boxShadowColor,
+          blurRadius: boxShadowBlurRadius,
+          spreadRadius: boxShadowSpreadRadius,
+        ),
+      ],
+    );
+
+    //含有borderRadius
+    BoxDecoration _fuleViewBoxDecorationWithBorderRadius = BoxDecoration(
+      color: backgroundColor,
+      border: getBorder(border, borderWidth, borderColor, borderStyle),
+      borderRadius: borderRadius ?? BorderRadius.circular(borderRadiusWidth),
+      boxShadow: [
+        BoxShadow(
+          color: boxShadowColor,
+          blurRadius: boxShadowBlurRadius,
+          spreadRadius: boxShadowSpreadRadius,
+        ),
+      ],
+    );
+
+    BoxDecoration _getBoxDecoration() {
+      if (borderRadius != null ||
+          (borderRadiusWidth != null && borderRadiusWidth != 0)) {
+        // print('_fuleViewBoxDecorationWithBorderRadius');
+        return _fuleViewBoxDecorationWithBorderRadius;
+      } else {
+        // print('_fuleViewBoxDecoration');
+        return _fuleViewBoxDecoration;
+      }
+    }
+
+    Widget _fuleView = Container(
         width: width,
         height: height,
         margin: getEdgeInsetsGeometry(margin ?? [0]),
         padding: getEdgeInsetsGeometry(padding ?? [0]),
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          border: getBorder(border, borderWidth, borderColor, borderStyle),
-          borderRadius:
-              borderRadius ?? BorderRadius.circular(borderRadiusWidth),
-          boxShadow: [
-            BoxShadow(
-              color: boxShadowColor,
-              blurRadius: boxShadowBlurRadius,
-              spreadRadius: boxShadowSpreadRadius,
-            ),
-          ],
-        ),
+        decoration: _getBoxDecoration(),
         child: child);
 
-    Widget _boxViewWithTap = InkWell(
+    //监听点击事件，外层套用InkWell
+    Widget _fuleViewWithTap = InkWell(
         splashColor: splashColor,
         focusColor: focusColor,
         highlightColor: highlightColor,
         hoverColor: hoverColor,
         onTap: onTap,
-        child: _boxView);
+        child: _fuleView);
 
-    return onTap == null ? _boxView : _boxViewWithTap;
+    return onTap == null ? _fuleView : _fuleViewWithTap;
   }
 }

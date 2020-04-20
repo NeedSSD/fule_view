@@ -2,7 +2,7 @@ name: fule_view
 description: 一个简单的视图容器组件，它允许你监听onTap事件。
 version: 0.1.0
 author: Yang-Xuhao
-homepage: https://github.com/Yang-Xuhao/fule_view
+homepage: https://github.com/NeedSSD/fule_view
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
