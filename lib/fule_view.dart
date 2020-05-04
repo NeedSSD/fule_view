@@ -10,10 +10,8 @@ class FuleView extends StatelessWidget {
   final Widget child;
   final Color backgroundColor;
   final VoidCallback onTap;
-  final Color splashColor;
-  final Color focusColor;
-  final Color highlightColor;
-  final Color hoverColor;
+  final VoidCallback onDoubleTap;
+  final VoidCallback onLongPress;
   final Border border;
   final double borderWidth;
   final Color borderColor;
@@ -32,10 +30,8 @@ class FuleView extends StatelessWidget {
     this.child,
     this.backgroundColor = Colors.transparent,
     this.onTap,
-    this.splashColor = Colors.transparent,
-    this.focusColor = Colors.transparent,
-    this.highlightColor = Colors.transparent,
-    this.hoverColor = Colors.transparent,
+    this.onDoubleTap,
+    this.onLongPress,
     this.border,
     this.borderWidth = 0,
     this.borderColor = Colors.black,
@@ -138,15 +134,14 @@ class FuleView extends StatelessWidget {
         decoration: _getBoxDecoration(),
         child: child);
 
-    //监听点击事件，外层套用InkWell
-    Widget _fuleViewWithTap = InkWell(
-        splashColor: splashColor,
-        focusColor: focusColor,
-        highlightColor: highlightColor,
-        hoverColor: hoverColor,
-        onTap: onTap,
-        child: _fuleView);
-
+    //监听点击事件
+    Widget _fuleViewWithTap = GestureDetector(
+      onTap: onTap,
+      onDoubleTap: onDoubleTap,
+      onLongPress: onLongPress,
+      child: _fuleView,
+    );
+    
     return onTap == null ? _fuleView : _fuleViewWithTap;
   }
 }
